@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "447948048148",
+    "project_id": "logistica-reversa-5ef8a",
+    "storage_bucket": "logistica-reversa-5ef8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447948048148:android:afa8c3883211972a5e6401",
+        "android_client_info": {
+          "package_name": "com.palazzo.logisticareversa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl6g1wVCOBSsUxUONAny0u0Fxzd3sCCUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

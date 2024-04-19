@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item
+        android:id="@+id/busca"
+        android:icon="@drawable/busca"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView"
+        android:title="Busca"/>
+
+    <item android:id="@+id/menu_abrir_grafico"
+        android:title="Abrir gráfico"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/auto_graph"/>
+
+    <item android:id="@+id/menu_criar_item"
+        android:title="Abrir tela"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/add_box"/>
+</menu>
