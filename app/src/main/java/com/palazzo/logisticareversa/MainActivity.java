@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.text.Normalizer;
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemListAdapter itemListAdapter;
     private ArrayAdapter<Item> adapter;
     private ArrayList<Item> listaFiltrada; // Esta será a lista filtrada exibida na tela
+    private ArrayList<Item> itens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,27 +44,22 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         listaItens = findViewById(R.id.listView);
-
-        ArrayList<Item> itens = new ArrayList<>();
-
-        adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                itens
-        );
-
+        itens = new ArrayList<>();
         itemListAdapter = new ItemListAdapter(this, itens);
         listaItens.setAdapter(itemListAdapter);
+
+        firebaseApi = new FirebaseApi(this, listaItens, itemListAdapter);
+        firebaseApi.buscarItens();
 
         listaItens.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Item selectedItem = (Item) itemListAdapter.getItem(position); // cast the returned object to an Item
                 Intent intent = new Intent(MainActivity.this, InformacoesItem.class);
+                intent.putExtra("selectedItem", selectedItem); // pass the selected item's data
                 startActivity(intent);
-
             }
         });
-
     }
 
     @Override
@@ -139,10 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_criar_item) {
-            Intent telaCriar = new Intent(this, CriarItemActivity.class);
-            startActivity(telaCriar);
-        } else if(item.getItemId() == R.id.menu_abrir_grafico) {
+        if(item.getItemId() == R.id.menu_abrir_grafico) {
             Intent telaGrafico = new Intent(this, GraficoActivity.class);
             startActivity(telaGrafico);
         }
@@ -152,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        firebaseApi = new FirebaseApi(this, listaItens, adapter);
+        firebaseApi = new FirebaseApi(this, listaItens, itemListAdapter);
         firebaseApi.buscarItens();
         configurarClicks();
     }

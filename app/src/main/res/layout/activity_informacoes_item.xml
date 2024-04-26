@@ -9,7 +9,7 @@
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarInformacoes"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="#800000"
@@ -30,7 +30,7 @@
         android:rowCount="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbarInformacoes">
 
         <TextView
             android:id="@+id/textViewNumeroPedido"
@@ -169,7 +169,7 @@
 
         <!-- EditTexts -->
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/textGarrafasQuebradas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -191,7 +191,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1">
 
         <EditText
-            android:id="@+id/editTextText4"
+            android:id="@+id/textGarrafasReciclagem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -211,7 +211,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <EditText
-            android:id="@+id/editTextText5"
+            android:id="@+id/textGarrafasReclamacoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

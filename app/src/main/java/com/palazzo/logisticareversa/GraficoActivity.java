@@ -3,6 +3,7 @@ package com.palazzo.logisticareversa;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.anychart.charts.Cartesian;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GraficoActivity extends AppCompatActivity {
 
@@ -27,6 +29,14 @@ public class GraficoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarGrafico);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.arrow_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                GraficoActivity.this.startActivity(new Intent(GraficoActivity.this, MainActivity.class));
+            }
+        });
 
         Button buttonAtualizar = findViewById(R.id.buttonAtualizar);
         buttonAtualizar.setOnClickListener(new View.OnClickListener() {

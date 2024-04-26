@@ -1,12 +1,17 @@
 package com.palazzo.logisticareversa;
 
 import android.app.Activity;
+import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.DocumentChange;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +20,15 @@ public class FirebaseApi {
     private static final String TABELA_NOME ="/pedidos";
     private final Activity activity;
     private ListView listViewItens;
-    private ArrayAdapter<Item> adapter;
-    private List<Item> itens;
+    private ItemListAdapter adapter;
+    private ArrayList<Item> itens;
+    private FirebaseFirestore firestore;
 
-    public FirebaseApi(Activity activity, ListView listViewLivros, ArrayAdapter<Item> adapter) {
-        this.activity = activity;
-        this.listViewItens = listViewLivros;
+    public FirebaseApi(Context context, ListView listView, ItemListAdapter adapter) {
+        this.activity = (AppCompatActivity) context;
+        this.listViewItens = listView;
         this.adapter = adapter;
+        this.firestore = FirebaseFirestore.getInstance();
     }
 
     public FirebaseApi(Activity activity) {this.activity = activity;}
@@ -42,29 +49,25 @@ public class FirebaseApi {
                 });
     }
 
-    public void buscarItens () {
-        ArrayList<Item> itens = new ArrayList<>();
-
-        FirebaseFirestore
-                .getInstance()
-                .collection(TABELA_NOME)
-                .addSnapshotListener((value, error) -> {
-                    List<DocumentChange> dcs = value.getDocumentChanges();
-
-                    for (DocumentChange doc: dcs) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                            Item i = doc.getDocument().toObject(Item.class);
-                            itens.add(i);
+    public void buscarItens() {
+        if(adapter != null) {
+            firestore.collection(TABELA_NOME)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<Item> itens = new ArrayList<>();
+                        for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
+                            Item item = snapshot.toObject(Item.class);
+                            if (item != null) {
+                                itens.add(item);
+                            }
                         }
-                    }
-                    adapter = new ArrayAdapter<>(
-                            activity.getApplicationContext(),
-                            android.R.layout.simple_list_item_1,
-                            itens
-                    );
-                    ItemListAdapter adapter = new ItemListAdapter(activity, itens);
-                    listViewItens.setAdapter(adapter);
-                });
+                        adapter.atualizarLista(itens);
+                    });
+        }
+    }
+
+    public ItemListAdapter getItemListAdapter() {
+        return adapter;
     }
 
     public Item getItem(int posicao) {return itens.get(posicao);}

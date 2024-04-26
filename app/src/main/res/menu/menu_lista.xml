@@ -13,9 +13,4 @@
         android:title="Abrir gráfico"
         app:showAsAction="ifRoom"
         android:icon="@drawable/auto_graph"/>
-
-    <item android:id="@+id/menu_criar_item"
-        android:title="Abrir tela"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/add_box"/>
 </menu>

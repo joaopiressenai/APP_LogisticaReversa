@@ -1,12 +1,18 @@
 package com.palazzo.logisticareversa;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
     private String dataDevolucao;
     private String dataEntrega;
     private String id;
     private int numeroPedido;
     private int quantidade;
     private String status;
+
+    private String garrafasQuebradas;
+    private String garrafasReciclagem;
+    private String garrafasReclamacoes;
 
     public Item(int numeroPedido2, int quantidade2, String dataEntrega2, String dataDevolucao2, String status2) {
         this.numeroPedido = numeroPedido2;
@@ -65,5 +71,29 @@ public class Item {
 
     public void setStatus(String status2) {
         this.status = status2;
+    }
+
+    public String getGarrafasQuebradas() {
+        return garrafasQuebradas;
+    }
+
+    public void setGarrafasQuebradas(String garrafasQuebradas) {
+        this.garrafasQuebradas = garrafasQuebradas;
+    }
+
+    public String getGarrafasReciclagem() {
+        return garrafasReciclagem;
+    }
+
+    public void setGarrafasReciclagem(String garrafasReciclagem) {
+        this.garrafasReciclagem = garrafasReciclagem;
+    }
+
+    public String getGarrafasReclamacoes() {
+        return garrafasReclamacoes;
+    }
+
+    public void setGarrafasReclamacoes(String garrafasReclamacoes) {
+        this.garrafasReclamacoes = garrafasReclamacoes;
     }
 }
