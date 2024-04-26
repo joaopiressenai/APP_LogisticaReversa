@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<Item> adapter;
     private ArrayList<Item> listaFiltrada; // Esta será a lista filtrada exibida na tela
     private ArrayList<Item> itens;
+    private int idItemSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item selectedItem = (Item) itemListAdapter.getItem(position); // cast the returned object to an Item
+
+                 idItemSelecionado = position;
+
+
+                if (selectedItem != null) {
+                    Log.d("MainActivity", "Selected Item: " + selectedItem.toString());
+                } else {
+                    Log.e("MainActivity", "Selected item is null");
+                }
+
                 Intent intent = new Intent(MainActivity.this, InformacoesItem.class);
                 intent.putExtra("selectedItem", selectedItem); // pass the selected item's data
                 startActivity(intent);

@@ -2,16 +2,15 @@ package com.palazzo.logisticareversa;
 
 import android.app.Activity;
 import android.content.Context;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,23 +65,29 @@ public class FirebaseApi {
         }
     }
 
+    public void buscarItemPorNumeroPedido(int numeroPedido, OnSuccessListener<Item> onSuccessListener, OnFailureListener onFailureListener) {
+        firestore.collection(TABELA_NOME)
+                .whereEqualTo("numeroPedido", numeroPedido)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                        Item item = documentSnapshot.toObject(Item.class);
+                        onSuccessListener.onSuccess(item);
+                    } else {
+                        onFailureListener.onFailure(new Exception("Item não encontrado"));
+                    }
+                })
+                .addOnFailureListener(onFailureListener);
+    }
+
+
+
     public ItemListAdapter getItemListAdapter() {
         return adapter;
     }
 
     public Item getItem(int posicao) {return itens.get(posicao);}
-
-    public void removerItem(Item item, String message) {
-        FirebaseFirestore.getInstance().collection(TABELA_NOME)
-                .document(item.getId())
-                .delete()
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(activity.getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                })
-                .addOnFailureListener(aVoid -> {
-                    Toast.makeText(activity.getApplicationContext(), "Erro ao remover item", Toast.LENGTH_LONG).show();
-                });
-    }
 
     private void atualizarId(Item item) {
         FirebaseFirestore.getInstance().collection(TABELA_NOME)

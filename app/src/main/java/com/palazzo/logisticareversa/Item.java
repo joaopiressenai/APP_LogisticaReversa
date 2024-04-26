@@ -96,4 +96,16 @@ public class Item implements Serializable {
     public void setGarrafasReclamacoes(String garrafasReclamacoes) {
         this.garrafasReclamacoes = garrafasReclamacoes;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "numeroPedido=" + numeroPedido +
+                ", quantidade=" + quantidade +
+                ", dataEntrega='" + dataEntrega + '\'' +
+                ", dataDevolucao='" + dataDevolucao + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
 }
